@@ -13,8 +13,9 @@ public class main {
     public static void main(String[] args) {
         util userName = new util();
         userName.readingFromFile();
-        userName.createAccount();  
-        userName.fileSaving();
-        
+       // userName.checkExistUser();
+     //   userName.createAccount();  
+       userName.fileSaving();
+        userName.searchUserInfomationByName();
     }
 }

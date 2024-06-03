@@ -132,5 +132,51 @@ public class util {
             System.out.println("#File Error");
         }
     }
+    
+    public void checkExistUser() {
+        Scanner sc = new Scanner(System.in);
+        user user = new user();
+        System.out.print("Enter User Name to check:");
+        String userName = sc.nextLine(); 
+        int a,b;
+        a=0; b=0;
+        for(user user1: userList){
+            a+=1;
+             if (userName.equals(user1.getUserName())){
+                  System.out.print("This user is already existed."); 
+                  break;
+    }
+             else{
+                 b+=1;
+             }
 }
-
+             if (b==a){
+             System.out.print("This user is not existed.");
+         }
+    }
+    public void searchUserInfomationByName(){
+     Scanner sc = new Scanner(System.in);
+        System.out.print("Enter user first name to check infomation:");
+        String Fname = sc.nextLine();
+        int a,b;
+         a=0; b=0;
+         for (user user : userList) {
+             a+=1;
+            if(Fname.equals(user.getFname())) {
+                System.out.println("User found.");
+                System.out.println("User name: " + user.getUserName());
+                System.out.println("Password: " + user.getPassWord());
+                System.out.println("First name: " + user.getFname());
+                System.out.println("Last name: " + user.getLname());
+                System.out.println("Date of birth: " + user.getBirthDay());
+                System.out.println("Phone Number: " + user.getPhoneNumber());
+                break;
+            }
+            else{b+=1;}
+        }
+         if (b==a){
+             System.out.println("User can not found with this first name.");
+         }
+    
+    }
+}
