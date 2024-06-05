@@ -87,6 +87,10 @@ public class user {
     public void setBirthDay(String birthDay) {
         this.birthDay = birthDay;
     }
+
+    void remove(String userName) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

@@ -6,10 +6,12 @@
 package account;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -22,20 +24,22 @@ public class util {
     public void createAccount() {
         Scanner sc = new Scanner(System.in);
         user user = new user();
-     System.out.print("Enter User Name (At least 5 characters, do not have space character and first character is not a number): ");
+     System.out.print("Enter User Name (At least 5 characters, do not have space character and first character is not a number):");
      String userName = sc.nextLine();
      boolean duplicate = true;
-     while (!userName.matches("^[a-zA-Z][a-zA-Z0-9]{4,}") || duplicate == true){
-         System.out.print("Re-Enter User Name (At least 5 characters, do not have space character and first character is not a number): ");
-         userName = sc.nextLine(); 
+   while (!userName.matches("^[a-zA-Z][a-zA-Z0-9]+{4,}") || duplicate == true){
+         duplicate=false;
          for(user user1: userList){
              if (userName.equals(user1.getUserName())){
                   System.out.print("This user is already existed. Re-Enter your user: ");
                    userName = sc.nextLine();
                    duplicate = true;
-             }else{
-                  duplicate = false; 
-             }
+             }}
+         if(!userName.matches("^[a-zA-Z][a-zA-Z0-9]{4,}")){{
+             System.out.print("Re-Enter User Name (At least 5 characters, do not have space character and first character is not a number):");}
+         userName = sc.nextLine();
+          
+             
          }
      }
       user.setUserName(userName);
@@ -93,8 +97,10 @@ public class util {
     }
     public void fileSaving() {
         try {
-             FileWriter input = new FileWriter("User.dat");
-             PrintWriter write = new PrintWriter(input);
+//             File file = new File("User.dat");
+//             file.deleteOnExit();
+            FileWriter input = new FileWriter("User.dat");
+            PrintWriter write = new PrintWriter(input);
              
              for ( user user : userList) {
                 write.println(user);
@@ -103,7 +109,7 @@ public class util {
             write.close();
             input.close();
         } catch (Exception e) {
-            System.out.println("File Error!!");
+           System.out.println("");
         }
     }
     public void readingFromFile() {
@@ -129,7 +135,7 @@ public class util {
             read.close();
             output.close();
         } catch (Exception e) {
-            System.out.println("#File Error");
+            System.out.println("");
         }
     }
     
@@ -143,7 +149,7 @@ public class util {
         for(user user1: userList){
             a+=1;
              if (userName.equals(user1.getUserName())){
-                  System.out.print("This user is already existed."); 
+                  System.out.println("This user is already existed."); 
                   break;
     }
              else{
@@ -156,13 +162,13 @@ public class util {
     }
     public void searchUserInfomationByName(){
      Scanner sc = new Scanner(System.in);
-        System.out.print("Enter user first name to check infomation:");
-        String Fname = sc.nextLine();
+        System.out.print("Enter usernname to check infomation:");
+        String userName = sc.nextLine();
         int a,b;
          a=0; b=0;
          for (user user : userList) {
              a+=1;
-            if(Fname.equals(user.getFname())) {
+            if(userName.equals(user.getUserName())) {
                 System.out.println("User found.");
                 System.out.println("User name: " + user.getUserName());
                 System.out.println("Password: " + user.getPassWord());
@@ -175,10 +181,72 @@ public class util {
             else{b+=1;}
         }
          if (b==a){
-             System.out.println("User can not found with this first name.");
+             System.out.println("User can not found with this name.");
          }
     
     }
-    
-    
+ public void deleteUser() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter user name to delete: ");
+        String userName = sc.nextLine();
+        
+        Iterator<user> iterator = userList.iterator();
+        boolean userFound = false;
+        
+        while (iterator.hasNext()) {
+            user user = iterator.next();
+            if (userName.equals(user.getUserName())) {
+                iterator.remove();
+                System.out.println("User " + userName + " has been removed.");
+                userFound = true;
+                break;
+            }
+        }
+
+        if (!userFound) {
+            System.out.println("User " + userName + " not found.");
+        }
+    }
+ public void menu(){
+     System.out.println("----Menu---");
+     System.out.println("1. Create new account.");
+     System.out.println("2. Check existed user.");
+     System.out.println("3. Search user infomation by user name.");
+     System.out.println("4. Delete user by user name.");
+     System.out.println("5. Show all user name.");
+     System.out.println("6. Show all user infomation.");
+     System.out.println("0. Exit.");
+ }
+ public void PrintAllUserNameExisted(){
+     int i = 0;
+   for (user user : userList){
+       i+=1;
+       System.out.println("User Name "+i+" is "+user.getUserName());
+   }
+   if(i==0)
+   {System.out.println("Can not found any user name existed.");}
+ }
+ 
+ public void PrintAllUserInfomation(){  
+      int i=1;
+         for (user user : userList) {  
+                
+                 System.out.println("User Name "+i);
+                System.out.println("User name: " + user.getUserName());
+                System.out.println("Password: " + user.getPassWord());
+                System.out.println("First name: " + user.getFname());
+                System.out.println("Last name: " + user.getLname());
+                System.out.println("Date of birth: " + user.getBirthDay());
+                System.out.println("Phone Number: " + user.getPhoneNumber());
+                i+=1;  
+         }
+         if (userList == null || userList.isEmpty()) {
+     System.out.println("Can not found any user name existed.");
+     return;
 }
+    
+   }
+ }
+
+    
+
